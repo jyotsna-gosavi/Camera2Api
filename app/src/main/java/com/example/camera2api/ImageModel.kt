@@ -4,5 +4,5 @@ import android.media.Image
 import android.net.Uri
 
 data class ImageModel (
-    var images: Uri
+    val imagePath: String
 )

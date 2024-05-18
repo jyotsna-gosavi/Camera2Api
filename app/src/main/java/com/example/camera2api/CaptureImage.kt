@@ -28,6 +28,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.camera2api.databinding.ActivityCaptureImageBinding
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class CaptureImage : AppCompatActivity() {
 
@@ -95,7 +97,11 @@ class CaptureImage : AppCompatActivity() {
             var bytes = ByteArray(buffer.remaining())
             buffer.get(bytes)
 
-            var file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "image.jpg")
+            val calendar = Calendar.getInstance()
+            val dateFormat = SimpleDateFormat("ddMMyyyy_HH:mm:ss")
+            val currentDateAndTime: String = dateFormat.format(calendar.time)
+            val fileName="IMG_"+currentDateAndTime
+            var file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "$fileName.jpg")
             var opStream = FileOutputStream(file)
 
             opStream.write(bytes)
