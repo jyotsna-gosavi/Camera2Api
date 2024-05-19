@@ -109,6 +109,7 @@ class CaptureImage : AppCompatActivity() {
             opStream.close()
             image.close()
             Toast.makeText(this@CaptureImage,"Image Captured",Toast.LENGTH_LONG).show()
+            finish()
         }, handler)
 
         binding.btnTake.setOnClickListener {

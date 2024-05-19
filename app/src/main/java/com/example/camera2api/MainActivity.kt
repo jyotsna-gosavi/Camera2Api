@@ -9,8 +9,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.camera2api.databinding.ActivityMainBinding
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() ,CameraImagesAdapter.OnImageItemClickLi
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CameraImagesAdapter
-    private lateinit var imagelist: List<ImageModel>
+    private lateinit var imageList: List<ImageModel>
 
 
     private val PERMISSION_REQUEST_CODE = 1
@@ -49,11 +51,6 @@ class MainActivity : AppCompatActivity() ,CameraImagesAdapter.OnImageItemClickLi
         } else {
             requestPermission()
         }
-
-       /* adapter = CameraImagesAdapter(this@MainActivity, imagelist)
-        binding.recyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerView.adapter = adapter*/
     }
     override fun onItemClick(imagePath: String) {
         val intent = Intent(this, DisplayImageActivity::class.java)
@@ -94,10 +91,11 @@ class MainActivity : AppCompatActivity() ,CameraImagesAdapter.OnImageItemClickLi
 
     private fun loadImages() {
         val imagePaths = getImagePaths().map { ImageModel(it) }
-        imagelist = imagePaths // Initialize imagelist with loaded image paths
+        imageList = imagePaths // Initialize imagelist with loaded image paths
         adapter = CameraImagesAdapter(this,imagePaths,this)
         binding.recyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//        GridLayoutManager(this, 2)
         binding.recyclerView.adapter = adapter
         adapter.updateData(imagePaths)
     }
